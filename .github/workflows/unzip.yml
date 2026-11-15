@@ -1,0 +1,125 @@
+
+name: Universal ZIP Extractor
+
+on:
+  workflow_dispatch:
+    inputs:
+      zip_file:
+        description: "ZIP filename (leave empty to auto-detect)"
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract ZIP into repository root
+        env:
+          ZIP_FILE: ${{ inputs.zip_file }}
+        run: |
+          python3 <<'PY'
+          import os
+          import zipfile
+          from pathlib import Path, PurePosixPath
+
+          root = Path.cwd()
+          filename = os.environ.get("ZIP_FILE", "").strip()
+
+          # Automatically find a ZIP if no filename was provided
+          if filename:
+              if Path(filename).name != filename:
+                  raise SystemExit("Enter a ZIP filename in the repository root.")
+              archive = root / filename
+          else:
+              archives = [
+                  p for p in root.iterdir()
+                  if p.is_file() and p.suffix.lower() == ".zip"
+              ]
+
+              if len(archives) != 1:
+                  raise SystemExit(
+                      f"Expected exactly one ZIP file, found {len(archives)}. "
+                      "Enter its filename when running the workflow."
+                  )
+
+              archive = archives[0]
+
+          if not archive.is_file() or not zipfile.is_zipfile(archive):
+              raise SystemExit(f"Invalid or missing ZIP file: {archive.name}")
+
+          print(f"Extracting: {archive.name}")
+
+          with zipfile.ZipFile(archive) as z:
+              entries = [i for i in z.infolist() if not i.is_dir()]
+
+              if not entries:
+                  raise SystemExit("The ZIP file contains no files.")
+
+              paths = [PurePosixPath(i.filename) for i in entries]
+
+              # Detect a ZIP containing one unnecessary parent folder
+              top_levels = {p.parts[0] for p in paths if p.parts}
+              flatten = (
+                  len(top_levels) == 1
+                  and all(len(p.parts) > 1 for p in paths)
+              )
+
+              prefix = next(iter(top_levels)) if flatten else None
+
+              for info, path in zip(entries, paths):
+                  if (
+                      path.is_absolute()
+                      or ".." in path.parts
+                      or not path.parts
+                      or path.parts[0] == ".git"
+                  ):
+                      raise SystemExit(f"Unsafe ZIP entry: {info.filename}")
+
+                  # Do not extract symbolic links
+                  mode = info.external_attr >> 16
+                  if (mode & 0o170000) == 0o120000:
+                      raise SystemExit(f"Symbolic links are not supported: {info.filename}")
+
+                  parts = path.parts[1:] if flatten else path.parts
+
+                  if not parts:
+                      continue
+
+                  destination = root.joinpath(*parts)
+
+                  if not destination.resolve().is_relative_to(root.resolve()):
+                      raise SystemExit(f"Unsafe destination: {info.filename}")
+
+                  destination.parent.mkdir(parents=True, exist_ok=True)
+
+                  with z.open(info) as source:
+                      with destination.open("wb") as target:
+                          target.write(source.read())
+
+                  print(f"Extracted: {destination.relative_to(root)}")
+
+          print("ZIP extraction completed successfully!")
+          PY
+
+      - name: Commit extracted files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Extract ZIP files into repository root"
+            git push
+          fi
+          
