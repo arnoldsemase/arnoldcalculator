@@ -49,7 +49,7 @@ private fun ArnoldRoot() {
         withFrameNanos { }
         ready = true
         if (showSplash) {
-            delay(1000)
+            delay(900)
             showSplash = false
         }
     }
