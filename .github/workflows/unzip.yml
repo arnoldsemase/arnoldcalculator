@@ -1,4 +1,4 @@
-name: Extract ZIP Files
+name: Extract ZIP to Root
 
 on:
   workflow_dispatch:
@@ -14,16 +14,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Extract all ZIP files
+      - name: Extract ZIP into root
         run: |
-          find . -name "*.zip" -not -path "./.git/*" | while read -r zipfile; do
-            dir="${zipfile%.zip}"
-            echo "Extracting $zipfile -> $dir"
-            mkdir -p "$dir"
-            unzip -o "$zipfile" -d "$dir"
-          done
+          rm -rf tmp_extract
+          mkdir tmp_extract
+          unzip -o ArnoldCalculator.zip -d tmp_extract
 
-      - name: Commit extracted files
+          # If the ZIP has a single top-level folder, use that as the source
+          src=tmp_extract
+          if [ "$(find tmp_extract -mindepth 1 -maxdepth 1 | wc -l)" -eq 1 ]; then
+            src=$(find tmp_extract -mindepth 1 -maxdepth 1 -type d)
+          fi
+
+          rsync -a --exclude='.github' "$src"/ ./
+          rm -rf tmp_extract ArnoldCalculator
+
+      - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -31,6 +37,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "Extract ZIP files"
+            git commit -m "Extract ArnoldCalculator to root"
             git push
           fi
