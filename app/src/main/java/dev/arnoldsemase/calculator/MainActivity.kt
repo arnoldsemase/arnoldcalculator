@@ -29,16 +29,16 @@ import dev.arnoldsemase.calculator.ui.settings.SettingsViewModel
 import dev.arnoldsemase.calculator.ui.theme.ArnoldTheme
 
 /** Shortest time the branded splash stays up, and the length of its fade into the calculator. */
-private const val MIN_SPLASH_MS = 800L
-private const val FADE_MS = 350
+private const val MIN_SPLASH_MS = 1500L
+private const val FADE_MS = 450
 
 class MainActivity : ComponentActivity() {
     @Volatile private var splashDrawn = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
-        // The system splash is only a blank, same-colour screen (no icon). Hold it until our own
-        // splash has drawn its first frame, then drop it instantly: the user sees only our fade + splash.
+        // The system splash shows the logo (no blank screen). Hold it until our own splash has drawn
+        // its first frame, then drop it instantly: the identical logo stays and the wordmark fades in.
         splash.setKeepOnScreenCondition { !splashDrawn }
         splash.setOnExitAnimationListener { provider -> provider.remove() }
         super.onCreate(savedInstanceState)
