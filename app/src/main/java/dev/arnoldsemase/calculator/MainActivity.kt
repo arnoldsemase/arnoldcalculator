@@ -29,24 +29,26 @@ import dev.arnoldsemase.calculator.ui.settings.SettingsViewModel
 import dev.arnoldsemase.calculator.ui.theme.ArnoldTheme
 
 /** Shortest time the branded splash stays up, and the length of its fade into the calculator. */
-private const val MIN_SPLASH_MS = 600L
+private const val MIN_SPLASH_MS = 800L
 private const val FADE_MS = 350
 
 class MainActivity : ComponentActivity() {
+    @Volatile private var splashDrawn = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
-        // Fade the system splash out (instead of cutting) into the identical Compose splash.
-        splash.setOnExitAnimationListener { provider ->
-            provider.view.animate().alpha(0f).setDuration(200L).withEndAction { provider.remove() }.start()
-        }
+        // The system splash is only a blank, same-colour screen (no icon). Hold it until our own
+        // splash has drawn its first frame, then drop it instantly: the user sees only our fade + splash.
+        splash.setKeepOnScreenCondition { !splashDrawn }
+        splash.setOnExitAnimationListener { provider -> provider.remove() }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent { ArnoldRoot() }
+        setContent { ArnoldRoot(onSplashDrawn = { splashDrawn = true }) }
     }
 }
 
 @Composable
-private fun ArnoldRoot() {
+private fun ArnoldRoot(onSplashDrawn: () -> Unit) {
     val app = LocalContext.current.applicationContext as ArnoldApp
     val factory = remember { AppViewModelFactory(app.container) }
     val settingsViewModel: SettingsViewModel = viewModel(factory = factory)
@@ -58,8 +60,11 @@ private fun ArnoldRoot() {
     LaunchedEffect(Unit) {
         val start = SystemClock.elapsedRealtime()
         if (!ready) {
-            withFrameNanos { }
+            withFrameNanos { }   // our splash is now on screen
+            onSplashDrawn()
             ready = true
+        } else {
+            onSplashDrawn()
         }
         if (showSplash) {
             // Wait until the calculator has actually been composed and drawn behind the splash,

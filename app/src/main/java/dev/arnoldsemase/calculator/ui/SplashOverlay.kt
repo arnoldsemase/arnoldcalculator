@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -28,14 +29,26 @@ import dev.arnoldsemase.calculator.ui.theme.ArnoldFonts
 @Composable
 fun SplashOverlay() {
     val c = Arnold.colors
+    val logo = remember { Animatable(0f) }
     val text = remember { Animatable(0f) }
     LaunchedEffect(Unit) {
-        text.animateTo(1f, tween(550, easing = FastOutSlowInEasing))
+        launch { logo.animateTo(1f, tween(450, easing = FastOutSlowInEasing)) }
+        text.animateTo(1f, tween(550, delay = 120, easing = FastOutSlowInEasing))
     }
 
     Box(Modifier.fillMaxSize().background(c.background)) {
-        // Same size and position as the system splash icon, so the hand-over is seamless.
-        ArnoldLogo(size = 160.dp, modifier = Modifier.align(Alignment.Center))
+        // The logo fades and scales in on its own (the system splash shows no icon).
+        ArnoldLogo(
+            size = 160.dp,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .graphicsLayer {
+                    alpha = logo.value
+                    val s = 0.88f + 0.12f * logo.value
+                    scaleX = s
+                    scaleY = s
+                },
+        )
         Column(
             Modifier
                 .align(Alignment.Center)
