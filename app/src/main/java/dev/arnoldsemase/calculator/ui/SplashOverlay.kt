@@ -33,7 +33,7 @@ fun SplashOverlay() {
     val text = remember { Animatable(0f) }
     LaunchedEffect(Unit) {
         launch { logo.animateTo(1f, tween(450, easing = FastOutSlowInEasing)) }
-        text.animateTo(1f, tween(550, delay = 120, easing = FastOutSlowInEasing))
+        text.animateTo(1f, tween(550, delayMillis = 120, easing = FastOutSlowInEasing))
     }
 
     Box(Modifier.fillMaxSize().background(c.background)) {
