@@ -163,8 +163,15 @@ fun SettingsScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
                         }
                     }
                     Text(
-                        text = "Part of the Arnold OS Apps ecosystem. Everything runs on your device: no account, no ads, no tracking.",
+                        text = "Part of the Arnold OS Apps ecosystem.",
                         modifier = Modifier.padding(top = 14.dp),
+                        color = c.textSecondary,
+                        fontSize = 14.sp,
+                        lineHeight = 21.sp,
+                    )
+                    Text(
+                        text = "Simple. Smart. Powerful.",
+                        modifier = Modifier.padding(top = 2.dp),
                         color = c.textSecondary,
                         fontSize = 14.sp,
                         lineHeight = 21.sp,

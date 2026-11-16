@@ -2,6 +2,7 @@ package dev.arnoldsemase.calculator.ui.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -45,44 +47,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.arnoldsemase.calculator.R
 import dev.arnoldsemase.calculator.ui.theme.Arnold
 import dev.arnoldsemase.calculator.ui.theme.ArnoldFonts
 
 /**
- * Arnold logo: a coral keycap carrying a chevron "A" over an "=" sign.
- * Geometry is on a 60-unit grid and matches ic_launcher_foreground / branding/arnold-logo.svg.
+ * Arnold logo: the red "A" keycap with calculator badge and orbit swoosh.
+ * Drawn from res/drawable-nodpi/arnold_logo.png (same artwork as the launcher icon and branding/).
  */
 @Composable
 fun ArnoldLogo(size: Dp, modifier: Modifier = Modifier) {
-    Canvas(modifier.size(size)) {
-        val k = this.size.minDimension / 60f
-        val corner = CornerRadius(18f * k)
-        drawRoundRect(
-            brush = Brush.linearGradient(
-                listOf(Color(0xFFFF7384), Color(0xFFFF4C60), Color(0xFFE63049)),
-                start = Offset(6f * k, 0f),
-                end = Offset(56f * k, 62f * k),
-            ),
-            cornerRadius = corner,
-        )
-        drawRoundRect(
-            brush = Brush.verticalGradient(
-                listOf(Color.White.copy(alpha = 0.22f), Color.Transparent),
-                startY = 0f,
-                endY = 36f * k,
-            ),
-            cornerRadius = corner,
-        )
-        val ink = Color(0xFF0F0F0F)
-        val legs = Path().apply {
-            moveTo(14.5f * k, 50f * k)
-            lineTo(30f * k, 10f * k)
-            lineTo(45.5f * k, 50f * k)
-        }
-        drawPath(legs, ink, style = Stroke(6.5f * k, cap = StrokeCap.Round, join = StrokeJoin.Round))
-        drawLine(ink, Offset(21.1f * k, 33f * k), Offset(38.9f * k, 33f * k), 4.8f * k, StrokeCap.Round)
-        drawLine(ink, Offset(17.6f * k, 42f * k), Offset(42.4f * k, 42f * k), 4.8f * k, StrokeCap.Round)
-    }
+    Image(
+        painter = painterResource(R.drawable.arnold_logo),
+        contentDescription = "Arnold Calculator logo",
+        modifier = modifier.size(size).clip(RoundedCornerShape(size * 0.2f)),
+    )
 }
 
 @Composable
