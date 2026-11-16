@@ -1,6 +1,7 @@
 package dev.arnoldsemase.calculator
 
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -27,9 +28,17 @@ import dev.arnoldsemase.calculator.ui.navigation.ArnoldNavHost
 import dev.arnoldsemase.calculator.ui.settings.SettingsViewModel
 import dev.arnoldsemase.calculator.ui.theme.ArnoldTheme
 
+/** Shortest time the branded splash stays up, and the length of its fade into the calculator. */
+private const val MIN_SPLASH_MS = 600L
+private const val FADE_MS = 350
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        val splash = installSplashScreen()
+        // Fade the system splash out (instead of cutting) into the identical Compose splash.
+        splash.setOnExitAnimationListener { provider ->
+            provider.view.animate().alpha(0f).setDuration(200L).withEndAction { provider.remove() }.start()
+        }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent { ArnoldRoot() }
@@ -43,20 +52,29 @@ private fun ArnoldRoot() {
     val settingsViewModel: SettingsViewModel = viewModel(factory = factory)
     val settings by settingsViewModel.settings.collectAsStateWithLifecycle()
     var showSplash by rememberSaveable { mutableStateOf(true) }
-    // Draw the splash first; build the heavy screens one frame later so the logo appears immediately.
-    var ready by remember { mutableStateOf(false) }
+    // Draw the splash first; build the calculator one frame later so the logo appears immediately.
+    // After rotation (splash already done) the calculator is composed straight away.
+    var ready by remember { mutableStateOf(!showSplash) }
     LaunchedEffect(Unit) {
-        withFrameNanos { }
-        ready = true
+        val start = SystemClock.elapsedRealtime()
+        if (!ready) {
+            withFrameNanos { }
+            ready = true
+        }
         if (showSplash) {
-            delay(900)
+            // Wait until the calculator has actually been composed and drawn behind the splash,
+            // then fade out, so the fade always reveals a finished screen (no blank/janky frames).
+            withFrameNanos { }
+            withFrameNanos { }
+            val remaining = MIN_SPLASH_MS - (SystemClock.elapsedRealtime() - start)
+            if (remaining > 0) delay(remaining)
             showSplash = false
         }
     }
     ArnoldTheme(mode = settings.theme) {
         Box {
             if (ready) ArnoldNavHost(factory = factory, settingsViewModel = settingsViewModel)
-            AnimatedVisibility(visible = showSplash, exit = fadeOut(tween(400))) { SplashOverlay() }
+            AnimatedVisibility(visible = showSplash, exit = fadeOut(tween(FADE_MS))) { SplashOverlay() }
         }
     }
 }

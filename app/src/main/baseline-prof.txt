@@ -1,0 +1,30 @@
+# Hand-written Baseline Profile: tells Android to precompile (AOT) these classes at install time
+# instead of interpreting them on first launch. This is the biggest fix for slow cold start.
+# H = hot, S = startup, P = post-startup.
+
+# The app's own code
+HSPLdev/arnoldsemase/calculator/**->**(**)**
+Ldev/arnoldsemase/calculator/**;
+
+# Compose runtime / UI / layout / animation / Material3 used on the first screen
+HSPLandroidx/compose/runtime/**->**(**)**
+HSPLandroidx/compose/ui/**->**(**)**
+HSPLandroidx/compose/foundation/**->**(**)**
+HSPLandroidx/compose/animation/**->**(**)**
+HSPLandroidx/compose/material3/**->**(**)**
+HSPLandroidx/compose/material/icons/**->**(**)**
+Landroidx/compose/runtime/**;
+Landroidx/compose/ui/**;
+Landroidx/compose/foundation/**;
+Landroidx/compose/animation/**;
+Landroidx/compose/material3/**;
+
+# Activity / lifecycle / navigation / splash glue
+HSPLandroidx/activity/**->**(**)**
+HSPLandroidx/lifecycle/**->**(**)**
+HSPLandroidx/navigation/**->**(**)**
+HSPLandroidx/core/splashscreen/**->**(**)**
+
+# Room + DataStore (opened at startup)
+HSPLandroidx/room/**->**(**)**
+HSPLandroidx/datastore/**->**(**)**
