@@ -26,7 +26,13 @@ Simple. Smart. Powerful.
 
 <br/>
 
-
+<div align="center">
+<img src="docs/screenshots/1.png" width="19%" alt="Instant answers" />
+<img src="docs/screenshots/2.png" width="19%" alt="Brackets, done right" />
+<img src="docs/screenshots/3.png" width="19%" alt="Full scientific mode" />
+<img src="docs/screenshots/4.png" width="19%" alt="Premium dark design" />
+<img src="docs/screenshots/5.png" width="19%" alt="Every result, saved" />
+</div>
 
 <br/>
 
@@ -61,8 +67,6 @@ Simple. Smart. Powerful.
 
 <br/>
 
-<br/>
-
 <img src="https://img.shields.io/badge/-%3Cunder%20the%20hood%2F%3E-FF4C60?style=flat-square&labelColor=0D0D12" />
 
 Kotlin · Jetpack Compose · Material 3 · MVVM · Room · DataStore · Navigation Compose. Offline, no backend.
@@ -76,7 +80,6 @@ ui/history     grouped history with copy / use / edit / delete + undo
 ui/settings    theme, haptics, number format, about
 ui/navigation  NavHost + transitions
 ```
-
 
 <br/>
 
