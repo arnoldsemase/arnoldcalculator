@@ -1,0 +1,29 @@
+Arnold Calculator is a modern, lightweight and intuitive calculator designed to make everyday calculations simple and efficient.
+
+Combining a clean interface with useful calculation tools, Arnold Calculator delivers a smooth experience for both basic arithmetic and more advanced mathematical operations.
+
+FEATURES
+
+• Basic Calculator
+Perform everyday calculations including addition, subtraction, multiplication and division.
+
+• Scientific Calculator
+Access advanced mathematical functions for more complex calculations.
+
+• Calculation History
+Review previous calculations without having to enter them again.
+
+• Clean and Modern Interface
+Enjoy a carefully designed interface focused on clarity, simplicity and usability.
+
+• Fast and Lightweight
+Designed to provide a responsive calculation experience without unnecessary complexity.
+
+• User-Friendly Experience
+Simple controls and an intuitive layout make calculations accessible and convenient.
+
+WHY ARNOLD CALCULATOR?
+
+Arnold Calculator brings essential calculation tools together in one application. Whether you are performing quick everyday calculations or working with scientific functions, it aims to provide a reliable and straightforward experience.
+
+Developed by Arnold Semase.
