@@ -1,0 +1,1 @@
+A fast, beautiful calculator with scientific mode and history. Simple. Smart. Powerful.
