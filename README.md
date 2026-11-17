@@ -27,11 +27,11 @@ Simple. Smart. Powerful.
 <br/>
 
 <div align="center">
-<img src="docs/screenshots/ArnoldCalculator_PlayStore_1.png" width="19%" alt="Instant answers" />
-<img src="docs/screenshots/ArnoldCalculator_PlayStore_2.png" width="19%" alt="Brackets, done right" />
-<img src="docs/screenshots/ArnoldCalculator_PlayStore_3.png" width="19%" alt="Full scientific mode" />
-<img src="docs/screenshots/ArnoldCalculator_PlayStore_4.png" width="19%" alt="Premium dark design" />
-<img src="docs/screenshots/ArnoldCalculator_PlayStore_5.png" width="19%" alt="Every result, saved" />
+<img src="docs/screenshots/ArnoldCalculator_1.png" width="19%" alt="Instant answers" />
+<img src="docs/screenshots/ArnoldCalculator_2.png" width="19%" alt="Brackets, done right" />
+<img src="docs/screenshots/ArnoldCalculator_3.png" width="19%" alt="Full scientific mode" />
+<img src="docs/screenshots/ArnoldCalculator_4.png" width="19%" alt="Premium dark design" />
+<img src="docs/screenshots/ArnoldCalculator_5.png" width="19%" alt="Every result, saved" />
 </div>
 
 <br/>
