@@ -3,7 +3,14 @@ package dev.arnoldsemase.calculator.ui.calculator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,6 +41,34 @@ import androidx.compose.ui.unit.sp
 import dev.arnoldsemase.calculator.ui.components.SegmentedChoice
 import dev.arnoldsemase.calculator.ui.theme.Arnold
 import dev.arnoldsemase.calculator.ui.theme.ArnoldFonts
+import androidx.compose.foundation.layout.padding
+
+/** Small pill showing the value held in memory. */
+@Composable
+private fun MemoryChip(value: String) {
+    val c = Arnold.colors
+    val shape = RoundedCornerShape(50)
+    Row(
+        Modifier
+            .clip(shape)
+            .background(c.surface)
+            .border(1.dp, c.outline.copy(alpha = 0.7f), shape)
+            .padding(horizontal = 12.dp, vertical = 7.dp)
+            .semantics { contentDescription = "Memory holds $value" },
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(Modifier.size(7.dp).clip(CircleShape).background(c.accent))
+        Text(
+            text = "M = $value",
+            modifier = Modifier.padding(start = 6.dp),
+            color = c.textSecondary,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium,
+            style = TextStyle(fontFeatureSettings = "tnum"),
+            maxLines = 1,
+        )
+    }
+}
 
 /** Single-line text that right-aligns, keeps the newest characters in view and scrolls when too long. */
 @Composable
@@ -89,6 +124,10 @@ fun DisplayPanel(
                 onSelect = { if (it != display.scientific) onToggleScientific() },
                 compact = true,
             )
+            if (display.memory != null) {
+                Spacer(Modifier.weight(1f))
+                MemoryChip(display.memory)
+            }
         }
         Spacer(Modifier.weight(1f))
         TrailingText(

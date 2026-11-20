@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Only used by the Currency tool to download exchange rates. Everything else works offline. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".ArnoldApp"
         android:allowBackup="true"

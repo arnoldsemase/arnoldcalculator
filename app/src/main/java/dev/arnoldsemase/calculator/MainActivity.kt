@@ -28,9 +28,12 @@ import dev.arnoldsemase.calculator.ui.navigation.ArnoldNavHost
 import dev.arnoldsemase.calculator.ui.settings.SettingsViewModel
 import dev.arnoldsemase.calculator.ui.theme.ArnoldTheme
 
-/** Shortest time the branded splash stays up, and the length of its fade into the calculator. */
-private const val MIN_SPLASH_MS = 1500L
-private const val FADE_MS = 450
+/**
+ * The branded splash is only a hand-over, not a wait: it leaves as soon as the calculator is drawn behind it
+ * (plus a short beat so the logo isn't a flash), and fades out quickly.
+ */
+private const val MIN_SPLASH_MS = 300L
+private const val FADE_MS = 250
 
 class MainActivity : ComponentActivity() {
     @Volatile private var splashDrawn = false

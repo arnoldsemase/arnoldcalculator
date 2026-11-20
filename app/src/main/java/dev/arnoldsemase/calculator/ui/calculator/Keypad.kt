@@ -265,3 +265,55 @@ fun SciencePad(
         }
     }
 }
+
+/** Slim memory row (MC, MR, M+, M−, MS) shown between the display and the keypads. */
+@Composable
+fun MemoryPad(
+    input: CalculatorInput,
+    haptics: Haptics,
+    hasMemory: Boolean,
+    modifier: Modifier = Modifier,
+    gap: Dp = 8.dp,
+) {
+    Row(modifier, horizontalArrangement = Arrangement.spacedBy(gap)) {
+        MemoryKey("MC", "Memory clear", enabled = hasMemory, haptics) { input.memoryClear() }
+        MemoryKey("MR", "Memory recall", enabled = hasMemory, haptics) { input.memoryRecall() }
+        MemoryKey("M+", "Add to memory", enabled = true, haptics) { input.memoryAdd() }
+        MemoryKey("M−", "Subtract from memory", enabled = true, haptics) { input.memorySubtract() }
+        MemoryKey("MS", "Store in memory", enabled = true, haptics) { input.memoryStore() }
+    }
+}
+
+@Composable
+private fun RowScope.MemoryKey(
+    label: String,
+    description: String,
+    enabled: Boolean,
+    haptics: Haptics,
+    onClick: () -> Unit,
+) {
+    val c = Arnold.colors
+    CalcKey(
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight(),
+        style = KeyStyle.Science,
+        description = if (enabled) description else "$description. Memory is empty",
+        onClick = {
+            if (enabled) {
+                haptics.tick()
+                onClick()
+            }
+        },
+    ) {
+        Text(
+            text = label,
+            color = if (enabled) c.text else c.textSecondary.copy(alpha = 0.5f),
+            fontFamily = ArnoldFonts.Display,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 13.sp * LocalKeyScale.current,
+            maxLines = 1,
+            softWrap = false,
+        )
+    }
+}

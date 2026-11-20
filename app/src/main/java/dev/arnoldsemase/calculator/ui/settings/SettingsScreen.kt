@@ -77,7 +77,7 @@ fun SettingsScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
                         onSelect = viewModel::setTheme,
                         modifier = Modifier.fillMaxWidth(),
                     )
-                    Hint("Dark is the Arnold default. System follows your phone.")
+                    Hint("Dark is the Ember default. System follows your phone.")
                 }
 
                 SectionTitle("Feedback")
@@ -153,7 +153,7 @@ fun SettingsScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
                         BrandMark(size = 52.dp)
                         Column(Modifier.padding(start = 14.dp)) {
                             Text(
-                                "Arnold Calculator",
+                                "Ember Calculator",
                                 color = c.text,
                                 fontFamily = ArnoldFonts.Display,
                                 fontWeight = FontWeight.Bold,

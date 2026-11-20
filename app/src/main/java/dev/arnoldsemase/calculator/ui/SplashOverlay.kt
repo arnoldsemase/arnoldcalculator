@@ -30,7 +30,7 @@ fun SplashOverlay() {
     val c = Arnold.colors
     val text = remember { Animatable(0f) }
     LaunchedEffect(Unit) {
-        text.animateTo(1f, tween(600, easing = FastOutSlowInEasing))
+        text.animateTo(1f, tween(350, easing = FastOutSlowInEasing))
     }
 
     Box(Modifier.fillMaxSize().background(c.background)) {
@@ -47,7 +47,7 @@ fun SplashOverlay() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Arnold",
+                text = "Ember",
                 color = c.text,
                 fontFamily = ArnoldFonts.Display,
                 fontWeight = FontWeight.Bold,

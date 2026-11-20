@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import dev.arnoldsemase.calculator.data.ThemeMode
 
-/** Arnold brand tokens, mirroring arnoldsemase.dev. */
+/** Ember brand tokens. */
 @Immutable
 class ArnoldColors(
     val isDark: Boolean,

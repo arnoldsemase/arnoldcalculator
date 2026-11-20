@@ -1,6 +1,6 @@
-Arnold Calculator is a modern, lightweight and intuitive calculator designed to make everyday calculations simple and efficient.
+Ember Calculator is a modern, lightweight and intuitive calculator designed to make everyday calculations simple and efficient.
 
-Combining a clean interface with useful calculation tools, Arnold Calculator delivers a smooth experience for both basic arithmetic and more advanced mathematical operations.
+Combining a clean interface with useful calculation tools, Ember Calculator delivers a smooth experience for both basic arithmetic and more advanced mathematical operations.
 
 FEATURES
 
@@ -24,6 +24,6 @@ Simple controls and an intuitive layout make calculations accessible and conveni
 
 WHY ARNOLD CALCULATOR?
 
-Arnold Calculator brings essential calculation tools together in one application. Whether you are performing quick everyday calculations or working with scientific functions, it aims to provide a reliable and straightforward experience.
+Ember Calculator brings essential calculation tools together in one application. Whether you are performing quick everyday calculations or working with scientific functions, it aims to provide a reliable and straightforward experience.
 
 Developed by Arnold Semase.

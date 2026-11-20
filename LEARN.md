@@ -1,7 +1,7 @@
-# Learn About Arnold Calculator
+# Learn About Ember Calculator
 
 ## About the Project
-Arnold Calculator is an Android calculator
+Ember Calculator is an Android calculator
 application designed with a modern interface.
 
 ## Technology Stack

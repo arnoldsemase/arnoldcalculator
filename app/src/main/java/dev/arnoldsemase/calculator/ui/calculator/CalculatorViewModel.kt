@@ -36,6 +36,11 @@ interface CalculatorInput {
     fun evaluate()
     fun toggleAngle()
     fun toggleScientific()
+    fun memoryClear()
+    fun memoryRecall()
+    fun memoryAdd()
+    fun memorySubtract()
+    fun memoryStore()
 }
 
 data class CalcState(
@@ -46,6 +51,8 @@ data class CalcState(
     val errorTick: Int = 0,
     val scientific: Boolean = false,
     val angle: AngleMode = AngleMode.DEG,
+    /** Value held in memory (MS / M+ / M−), or null when memory is empty. */
+    val memory: Double? = null,
 )
 
 data class DisplayState(
@@ -57,6 +64,8 @@ data class DisplayState(
     val scientific: Boolean = false,
     val angle: AngleMode = AngleMode.DEG,
     val decimalMark: Char = '.',
+    /** Formatted memory value for the display chip, or null when memory is empty. */
+    val memory: String? = null,
 )
 
 private val LONE_NUMBER = Regex("^−?[0-9]*\\.?[0-9]*$")
@@ -170,7 +179,7 @@ class CalculatorViewModel(
     }
 
     override fun clear() {
-        state.update { CalcState(scientific = it.scientific, angle = it.angle) }
+        state.update { CalcState(scientific = it.scientific, angle = it.angle, memory = it.memory) }
     }
 
     override fun evaluate() {
@@ -204,6 +213,43 @@ class CalculatorViewModel(
         state.update { it.copy(scientific = !it.scientific) }
     }
 
+    // ---- Memory ---------------------------------------------------------------------------------
+
+    /** The number currently on screen: a committed result, a lone number, or the live preview. */
+    private fun currentValue(s: CalcState): Double? {
+        if (s.error != null) return null
+        val text = (s.result ?: s.expression).replace('-', '−')
+        if (text.isEmpty()) return null
+        val value = if (LONE_NUMBER.matches(text)) {
+            text.replace('−', '-').toDoubleOrNull()
+        } else {
+            ExpressionEvaluator.preview(s.expression, s.angle)
+        }
+        return value?.takeIf { it.isFinite() }
+    }
+
+    override fun memoryClear() = state.update { it.copy(memory = null) }
+
+    override fun memoryRecall() {
+        val m = state.value.memory ?: return
+        appendResult(NumberFormatter.toPlain(m))
+    }
+
+    override fun memoryAdd() = state.update { s ->
+        val v = currentValue(s) ?: return@update s
+        s.copy(memory = (s.memory ?: 0.0) + v)
+    }
+
+    override fun memorySubtract() = state.update { s ->
+        val v = currentValue(s) ?: return@update s
+        s.copy(memory = (s.memory ?: 0.0) - v)
+    }
+
+    override fun memoryStore() = state.update { s ->
+        val v = currentValue(s) ?: return@update s
+        s.copy(memory = v)
+    }
+
     // ---- From History ---------------------------------------------------------------------------
 
     /** Puts a saved expression back on the display for editing. */
@@ -227,6 +273,7 @@ private fun buildDisplay(s: CalcState, settings: NumberFormatSettings): DisplayS
         angle = s.angle,
         decimalMark = settings.decimalMark.char,
         errorTick = s.errorTick,
+        memory = s.memory?.let { f.display(NumberFormatter.toPlain(it)) },
     )
     return when {
         s.result != null -> base.copy(

@@ -52,14 +52,14 @@ import dev.arnoldsemase.calculator.ui.theme.Arnold
 import dev.arnoldsemase.calculator.ui.theme.ArnoldFonts
 
 /**
- * Arnold logo: the red "A" keycap with calculator badge and orbit swoosh.
+ * Ember logo: the coral "E" ribbon with calculator operators on a dark glass plate.
  * Drawn from res/drawable-nodpi/arnold_logo.png (same artwork as the launcher icon and branding/).
  */
 @Composable
 fun ArnoldLogo(size: Dp, modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(R.drawable.arnold_logo),
-        contentDescription = "Arnold Calculator logo",
+        contentDescription = "Ember Calculator logo",
         modifier = modifier.size(size).clip(RoundedCornerShape(size * 0.2f)),
     )
 }
@@ -73,7 +73,7 @@ fun BrandTitle() {
     Row(verticalAlignment = Alignment.CenterVertically) {
         BrandMark()
         Text(
-            text = "Arnold",
+            text = "Ember",
             modifier = Modifier.padding(start = 10.dp),
             color = c.text,
             fontFamily = ArnoldFonts.Display,
@@ -153,6 +153,26 @@ fun HistoryGlyph(color: Color, modifier: Modifier = Modifier.size(22.dp)) {
         drawCircle(color, radius = s * 0.42f, style = Stroke(w, cap = StrokeCap.Round))
         drawLine(color, Offset(s * 0.5f, s * 0.28f), Offset(s * 0.5f, s * 0.5f), w, StrokeCap.Round)
         drawLine(color, Offset(s * 0.5f, s * 0.5f), Offset(s * 0.65f, s * 0.6f), w, StrokeCap.Round)
+    }
+}
+
+/** 2 × 2 grid of rounded squares: the Tools entry point. */
+@Composable
+fun ToolsGlyph(color: Color, modifier: Modifier = Modifier.size(20.dp)) {
+    Canvas(modifier) {
+        val s = size.minDimension
+        val cell = s * 0.4f
+        val r = CornerRadius(s * 0.12f)
+        val stroke = Stroke(s * 0.09f)
+        for (ix in 0..1) for (iy in 0..1) {
+            drawRoundRect(
+                color = color,
+                topLeft = Offset(s * 0.05f + ix * s * 0.5f, s * 0.05f + iy * s * 0.5f),
+                size = Size(cell, cell),
+                cornerRadius = r,
+                style = stroke,
+            )
+        }
     }
 }
 

@@ -43,6 +43,7 @@ import dev.arnoldsemase.calculator.ui.components.ArnoldIconButton
 import dev.arnoldsemase.calculator.ui.components.ArnoldSnackbar
 import dev.arnoldsemase.calculator.ui.components.BrandTitle
 import dev.arnoldsemase.calculator.ui.components.HistoryGlyph
+import dev.arnoldsemase.calculator.ui.components.ToolsGlyph
 import dev.arnoldsemase.calculator.ui.components.rememberHaptics
 import dev.arnoldsemase.calculator.ui.theme.Arnold
 import kotlinx.coroutines.launch
@@ -50,6 +51,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun CalculatorScreen(
     viewModel: CalculatorViewModel,
+    onOpenTools: () -> Unit,
     onOpenHistory: () -> Unit,
     onOpenSettings: () -> Unit,
 ) {
@@ -95,6 +97,9 @@ fun CalculatorScreen(
             ) {
                 BrandTitle()
                 Spacer(Modifier.weight(1f))
+                ArnoldIconButton(onClick = onOpenTools, description = "Tools") {
+                    ToolsGlyph(c.text, Modifier.size(20.dp))
+                }
                 ArnoldIconButton(onClick = onOpenHistory, description = "History") {
                     HistoryGlyph(c.text, Modifier.size(22.dp))
                 }
@@ -111,7 +116,8 @@ fun CalculatorScreen(
                     .align(Alignment.TopCenter)
 
                 if (landscape) {
-                    val keyH = ((maxHeight - 72.dp - gap * 5) / 5).coerceIn(30.dp, 58.dp)
+                    val memH = 30.dp
+                    val keyH = ((maxHeight - 72.dp - memH - 8.dp - gap * 5) / 5).coerceIn(30.dp, 58.dp)
                     val padH = keyH * 5 + gap * 4
                     CompositionLocalProvider(LocalKeyScale provides 0.72f) {
                         Column(contentModifier.fillMaxSize().padding(bottom = 10.dp)) {
@@ -122,6 +128,8 @@ fun CalculatorScreen(
                                 modifier = Modifier.weight(1f).padding(bottom = 8.dp),
                                 compact = true,
                             )
+                            MemoryPad(viewModel, haptics, display.memory != null, Modifier.fillMaxWidth().height(memH), gap = 8.dp)
+                            Spacer(Modifier.height(8.dp))
                             Row(Modifier.fillMaxWidth().height(padH), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                                 if (display.scientific) {
                                     SciencePad(viewModel, haptics, display.angle, Modifier.weight(1f).height(padH), gap = 8.dp)
@@ -134,8 +142,9 @@ fun CalculatorScreen(
                     val sciKey = if (maxHeight < 720.dp) 36.dp else 42.dp
                     val sciGap = 8.dp
                     val sciH = sciKey * 4 + sciGap * 3
+                    val memH = if (maxHeight < 720.dp) 34.dp else 38.dp
                     val minDisplay = 176.dp
-                    val available = maxHeight - minDisplay - 12.dp -
+                    val available = maxHeight - minDisplay - 12.dp - (memH + gap) -
                         (if (display.scientific) sciH + gap else 0.dp)
                     val stdKeyTarget = ((available - gap * 4) / 5).coerceIn(44.dp, 78.dp)
                     val stdKey by animateDpAsState(stdKeyTarget, tween(260), label = "stdKey")
@@ -148,6 +157,8 @@ fun CalculatorScreen(
                             onToggleScientific = viewModel::toggleScientific,
                             modifier = Modifier.weight(1f).padding(bottom = 12.dp),
                         )
+                        MemoryPad(viewModel, haptics, display.memory != null, Modifier.fillMaxWidth().height(memH))
+                        Spacer(Modifier.height(gap))
                         AnimatedVisibility(
                             visible = display.scientific,
                             enter = expandVertically(tween(260)) + fadeIn(tween(260)),

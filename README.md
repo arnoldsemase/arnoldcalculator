@@ -2,9 +2,9 @@
 
 <img src="https://img.shields.io/badge/-%3Carnold%20os%20apps%3E-0D0D12?style=flat-square&labelColor=0D0D12&color=FF4C60" alt="opening tag" />
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D0D12,100:FF4C60&height=170&section=header&text=ARNOLD%20CALCULATOR&fontSize=46&fontColor=F5F1EA&fontAlignY=40&desc=Calculate%20%C2%B7%20Solve%20%C2%B7%20Achieve&descAlignY=62&descSize=17&animation=fadeIn" width="100%" alt="Arnold Calculator" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D0D12,100:FF4C60&height=170&section=header&text=EMBER%20CALCULATOR&fontSize=46&fontColor=F5F1EA&fontAlignY=40&desc=Calculate%20%C2%B7%20Solve%20%C2%B7%20Achieve&descAlignY=62&descSize=17&animation=fadeIn" width="100%" alt="Ember Calculator" />
 
-<img src="branding/arnold-logo.png" width="180" alt="Arnold Calculator logo" />
+<img src="branding/ember-logo.png" width="180" alt="Ember Calculator logo" />
 
 <br/><br/>
 
@@ -16,7 +16,7 @@ Simple. Smart. Powerful.
 <img src="https://img.shields.io/badge/VERSION-1.0.0-FF4C60?style=for-the-badge&labelColor=0D0D12" />
 <img src="https://img.shields.io/badge/ANDROID-8.0%2B-1A1A23?style=for-the-badge&logo=android&logoColor=FF4C60" />
 <img src="https://img.shields.io/badge/KOTLIN-COMPOSE-1A1A23?style=for-the-badge&logo=kotlin&logoColor=FF4C60" />
-<img src="https://img.shields.io/badge/OFFLINE-100%25-1A1A23?style=for-the-badge&logoColor=FF4C60" />
+<img src="https://img.shields.io/badge/OFFLINE--FIRST-1A1A23?style=for-the-badge&logoColor=FF4C60" />
 
 <br/><br/>
 
@@ -69,12 +69,12 @@ Simple. Smart. Powerful.
 
 <img src="https://img.shields.io/badge/-%3Cunder%20the%20hood%2F%3E-FF4C60?style=flat-square&labelColor=0D0D12" />
 
-Kotlin · Jetpack Compose · Material 3 · MVVM · Room · DataStore · Navigation Compose. Offline, no backend.
+Kotlin · Jetpack Compose · Material 3 · MVVM · Room · DataStore · Navigation Compose. Offline-first, no backend. The only network call is the optional currency-rate download.
 
 ```
 engine/        ExpressionEvaluator (parser, precedence, DEG/RAD, errors), NumberFormatter
 data/          Room history, DataStore settings, repositories
-ui/theme       Arnold brand tokens (dark + light)
+ui/theme       Ember brand tokens (dark + light)
 ui/calculator  keypad, display, ViewModel
 ui/history     grouped history with copy / use / edit / delete + undo
 ui/settings    theme, haptics, number format, about
