@@ -28,10 +28,10 @@ Simple. Smart. Powerful.
 
 <div align="center">
 <img src="https://apps.arnoldsemase.dev/images/ember-1.jpg" width="19%" alt="Instant answers" />
-<img src="docs/screenshots/ArnoldCalculator_2.png" width="19%" alt="Brackets, done right" />
-<img src="docs/screenshots/ArnoldCalculator_3.png" width="19%" alt="Full scientific mode" />
-<img src="docs/screenshots/ArnoldCalculator_4.png" width="19%" alt="Premium dark design" />
-<img src="docs/screenshots/ArnoldCalculator_5.png" width="19%" alt="Every result, saved" />
+<img src="https://apps.arnoldsemase.dev/images/ember-2.jpg" width="19%" alt="Brackets, done right" />
+<img src="https://apps.arnoldsemase.dev/images/ember-3.jpg" width="19%" alt="Full scientific mode" />
+<img src="https://apps.arnoldsemase.dev/images/ember-4.jpg" width="19%" alt="Premium dark design" />
+<img src="https://apps.arnoldsemase.dev/images/ember-5.jpg" width="19%" alt="Every result, saved" />
 </div>
 
 <br/>
