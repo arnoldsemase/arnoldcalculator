@@ -1,5 +1,5 @@
 <div align="center">
- 
+  
 <img src="https://img.shields.io/badge/-%3Carnold%20os%20apps%3E-0D0D12?style=flat-square&labelColor=0D0D12&color=FF4C60" alt="opening tag" />
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D0D12,100:FF4C60&height=170&section=header&text=EMBER%20CALCULATOR&fontSize=46&fontColor=F5F1EA&fontAlignY=40&desc=Calculate%20%C2%B7%20Solve%20%C2%B7%20Achieve&descAlignY=62&descSize=17&animation=fadeIn" width="100%" alt="Ember Calculator" />
