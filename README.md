@@ -32,6 +32,7 @@ Simple. Smart. Powerful.
 <img src="https://apps.arnoldsemase.dev/images/ember-3.jpg" width="19%" alt="Full scientific mode" />
 <img src="https://apps.arnoldsemase.dev/images/ember-4.jpg" width="19%" alt="Premium dark design" />
 <img src="https://apps.arnoldsemase.dev/images/ember-5.jpg" width="19%" alt="Every result, saved" />
+<img src="https://apps.arnoldsemase.dev/images/ember-6.jpg" width="19%" alt="Every result, saved" />
 </div>
 
 <br/>
