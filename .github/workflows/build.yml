@@ -35,7 +35,7 @@ jobs:
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: arnoldcalculator
+          name: ember-calculator
           path: app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
 
