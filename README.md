@@ -27,7 +27,7 @@ Simple. Smart. Powerful.
 <br/>
 
 <div align="center">
-<img src="docs/screenshots/ArnoldCalculator_1.png" width="19%" alt="Instant answers" />
+<img src="https://apps.arnoldsemase.dev/images/ember-1.jpg" width="19%" alt="Instant answers" />
 <img src="docs/screenshots/ArnoldCalculator_2.png" width="19%" alt="Brackets, done right" />
 <img src="docs/screenshots/ArnoldCalculator_3.png" width="19%" alt="Full scientific mode" />
 <img src="docs/screenshots/ArnoldCalculator_4.png" width="19%" alt="Premium dark design" />
